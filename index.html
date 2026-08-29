@@ -22,11 +22,12 @@
      ここの値を変えるだけでサイト全体の色味を調整できます。
      ========================================================== */
   :root{
-    --color-black: #121212;      /* ベースの黒 */
-    --color-ink: #1b1815;        /* 見出しなどの濃い黒(少し茶を混ぜた墨色) */
+    --color-black: #1c1712;      /* ベースの黒(少し柔らかくした黒茶) */
+    --color-ink: #241f1a;        /* 見出しなどの濃い黒(少し茶を混ぜた墨色) */
     --color-white: #faf7f2;      /* ベースの白(和紙のような生成り色) */
-    --color-wood: #6b4a34;       /* 木目調のブラウン */
-    --color-wood-dark: #2c2019;  /* 濃い木目色(背景用) */
+    --color-cream: #f3ead8;      /* 明るめのセクション背景用(生成りより少し濃い) */
+    --color-wood: #8a6248;       /* 木目調のブラウン(以前より明るめ) */
+    --color-wood-dark: #4a3527;  /* 濃い木目色(以前より明るめ、フッター等で使用) */
     --color-accent: #c1272d;     /* 差し色:朱色 */
     --color-gold: #c9a227;       /* 差し色:金 */
     --font-heading: 'Shippori Mincho', serif;   /* 見出し用フォント */
@@ -133,13 +134,13 @@
     align-items: center;
     justify-content: space-between;
     padding: 18px 28px;
-    background: rgba(18, 18, 18, 0.0);
+    background: rgba(36, 31, 26, 0.0);
     transition: background 0.4s ease, padding 0.4s ease;
   }
   .site-header.scrolled{
-    background: rgba(18, 18, 18, 0.92);
+    background: rgba(36, 31, 26, 0.92);
     padding: 12px 28px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
   }
   .logo{
     font-family: var(--font-heading);
@@ -207,11 +208,11 @@
     isolation: isolate;
   }
   .hero::before{
-    /* 画像の上に黒いフィルターをかけて文字を読みやすくする */
+    /* 画像の上にフィルターをかけて文字を読みやすくする(以前より明るめの木の色に) */
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+    background: linear-gradient(180deg, rgba(40,28,20,0.4), rgba(28,20,15,0.62));
     z-index: -1;
   }
   .hero-content{
@@ -227,6 +228,7 @@
     margin-bottom: 22px;
   }
   .hero-title{
+    color: var(--color-white);
     font-size: clamp(2.6rem, 7vw, 5rem);
     line-height: 1.15;
     margin-bottom: 20px;
@@ -283,39 +285,37 @@
      5. サービス セクション
      ========================================================== */
   .services{
-    background: var(--color-wood-dark);
-    color: var(--color-white);
+    background: var(--color-cream);
+    color: var(--color-ink);
   }
-  .services .section-title,
-  .services .section-intro{ color: var(--color-white); }
-  .services .section-intro{ color: #cfc4b4; }
+  .services .section-intro{ color: #6b5d4d; }
   .service-grid{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 28px;
   }
   .service-card{
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,162,39,0.35);
+    background: var(--color-white);
+    border: 1px solid rgba(193,39,45,0.18);
     padding: 40px 26px;
     text-align: center;
-    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   }
   .service-card:hover{
     transform: translateY(-8px);
     border-color: var(--color-gold);
-    background: rgba(255,255,255,0.07);
+    box-shadow: 0 12px 28px rgba(74,53,39,0.12);
   }
   .service-icon{
     font-size: 2.2rem;
     margin-bottom: 18px;
   }
   .service-card h3{
-    color: var(--color-white);
+    color: var(--color-ink);
     font-size: 1.2rem;
   }
   .service-card p{
-    color: #cfc4b4;
+    color: #6b5d4d;
     font-size: 0.92rem;
   }
 
@@ -421,12 +421,12 @@
      8. お問い合わせ / 予約セクション
      ========================================================== */
   .contact{
-    background: var(--color-ink);
+    background: var(--color-wood);
     color: var(--color-white);
     text-align: center;
   }
   .contact .section-title, .contact .section-intro{ color: var(--color-white); }
-  .contact .section-intro{ color: #cfc4b4; }
+  .contact .section-intro{ color: #ecdfcf; }
   .contact-buttons{
     display: flex;
     flex-wrap: wrap;
@@ -440,8 +440,8 @@
      9. フッター
      ========================================================== */
   .site-footer{
-    background: var(--color-black);
-    color: #9c9186;
+    background: var(--color-wood-dark);
+    color: #d9cdb8;
     text-align: center;
     padding: 32px 20px;
     font-size: 0.8rem;
@@ -483,7 +483,7 @@
       height: 100vh;
       width: 70%;
       max-width: 300px;
-      background: rgba(18,18,18,0.98);
+      background: rgba(36,31,26,0.98);
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
@@ -693,7 +693,7 @@
     </p>
     <div class="contact-buttons">
       <!-- Instagramのリンク(実際のアカウントURLに差し替えてください) -->
-      <a href="https://instagram.com/sugoisushi.sydney" target="_blank" rel="noopener" class="btn">Instagram</a>
+      <a href="https://instagram.com/sugoi_sushi_au" target="_blank" rel="noopener" class="btn">Instagram</a>
       <!-- 電話番号リンク(実際の番号に差し替えてください) -->
       <a href="tel:+61400000000" class="btn">Call: +61 400 000 000</a>
       <!-- メールリンク(実際のメールアドレスに差し替えてください) -->
