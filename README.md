@@ -1,6 +1,6 @@
-# Jin Sushi Chef Website
+# Sugoi Sushi Website
 
-Jin(仁)– シドニーを拠点とする日本人プライベート寿司シェフの一枚ページサイトです。
+シドニーを拠点とするプライベート寿司シェフ Jin(仁)によるビジネス「Sugoi Sushi」の一枚ページサイトです。
 
 ## ファイル構成
 
