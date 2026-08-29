@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jin | Private Sushi Chef in Sydney</title>
+<meta name="description" content="Jin is a Japanese private sushi chef based in Sydney, offering bespoke omakase experiences for birthdays, parties and special dining events.">
+
+<!--
+  フォントの読み込み(Google Fonts)
+  ・見出し用: Shippori Mincho(和風の明朝体)
+  ・本文用: Noto Serif(上品なセリフ体、英語表記に対応)
+  外部ライブラリはこのフォントのみで、あとは素のHTML/CSS/JSです。
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================
+     0. 変数定義(カラー・フォントなど)
+     ここの値を変えるだけでサイト全体の色味を調整できます。
+     ========================================================== */
+  :root{
+    --color-black: #121212;      /* ベースの黒 */
+    --color-ink: #1b1815;        /* 見出しなどの濃い黒(少し茶を混ぜた墨色) */
+    --color-white: #faf7f2;      /* ベースの白(和紙のような生成り色) */
+    --color-wood: #6b4a34;       /* 木目調のブラウン */
+    --color-wood-dark: #2c2019;  /* 濃い木目色(背景用) */
+    --color-accent: #c1272d;     /* 差し色:朱色 */
+    --color-gold: #c9a227;       /* 差し色:金 */
+    --font-heading: 'Shippori Mincho', serif;   /* 見出し用フォント */
+    --font-body: 'Noto Serif', serif;           /* 本文用フォント */
+    --max-width: 1140px;
+  }
+
+  /* ==========================================================
+     1. リセット & 基本スタイル
+     ========================================================== */
+  *, *::before, *::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--color-white);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4{
+    font-family: var(--font-heading);
+    font-weight: 700;
+    margin: 0 0 0.6em;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+  }
+  p{ margin: 0 0 1em; }
+  a{ color: inherit; text-decoration: none; }
+  img{ max-width: 100%; display: block; }
+  ul{ margin: 0; padding: 0; list-style: none; }
+  section{ padding: 100px 24px; }
+  .container{
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  /* セクション共通の見出しスタイル */
+  .section-label{
+    display: block;
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    letter-spacing: 0.3em;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .section-title{
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 16px;
+  }
+  .section-title::after{
+    content: "";
+    display: block;
+    width: 56px;
+    height: 2px;
+    background: var(--color-gold);
+    margin: 20px auto 0;
+  }
+  .section-intro{
+    max-width: 640px;
+    margin: 0 auto 60px;
+    text-align: center;
+    color: #4a4239;
+  }
+
+  /* ボタン共通スタイル */
+  .btn{
+    display: inline-block;
+    padding: 16px 40px;
+    border: 1px solid var(--color-gold);
+    color: var(--color-white);
+    background: transparent;
+    font-family: var(--font-heading);
+    letter-spacing: 0.15em;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.35s ease, color 0.35s ease, transform 0.25s ease;
+  }
+  .btn:hover{
+    background: var(--color-gold);
+    color: var(--color-ink);
+    transform: translateY(-2px);
+  }
+  .btn-dark{
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+  .btn-dark:hover{
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+
+  /* ==========================================================
+     2. ヘッダー / ナビゲーション
+     ========================================================== */
+  .site-header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    background: rgba(18, 18, 18, 0.0);
+    transition: background 0.4s ease, padding 0.4s ease;
+  }
+  .site-header.scrolled{
+    background: rgba(18, 18, 18, 0.92);
+    padding: 12px 28px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+  .logo{
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    letter-spacing: 0.2em;
+    color: var(--color-white);
+  }
+  .logo span{ color: var(--color-accent); }
+
+  .nav-links{
+    display: flex;
+    gap: 32px;
+  }
+  .nav-links a{
+    color: var(--color-white);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after{
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--color-gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after{ width: 100%; }
+
+  /* ハンバーガーメニュー(スマホ用) */
+  .menu-toggle{
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .menu-toggle span{
+    width: 26px;
+    height: 2px;
+    background: var(--color-white);
+    display: block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .menu-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .menu-toggle.open span:nth-child(2){ opacity: 0; }
+  .menu-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  /* ==========================================================
+     3. ヒーローセクション
+     ========================================================== */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: url("images/hero-bg.svg") center/cover no-repeat;
+    isolation: isolate;
+  }
+  .hero::before{
+    /* 画像の上に黒いフィルターをかけて文字を読みやすくする */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.75));
+    z-index: -1;
+  }
+  .hero-content{
+    color: var(--color-white);
+    padding: 0 20px;
+  }
+  .hero-kicker{
+    display: block;
+    letter-spacing: 0.4em;
+    font-size: 0.85rem;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .hero-title{
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .hero-title .accent{ color: var(--color-accent); }
+  .hero-subtitle{
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #e8e2d8;
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  /* ==========================================================
+     4. About セクション
+     ========================================================== */
+  .about{
+    background: var(--color-white);
+  }
+  .about .container{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .about-image{
+    overflow: hidden;
+    border: 1px solid #ddd0bd;
+  }
+  .about-image img{
+    transition: transform 0.6s ease;
+  }
+  .about-image:hover img{ transform: scale(1.05); }
+  .about-text .section-label{ text-align: left; }
+  .about-text h2{ text-align: left; }
+  .about-text h2::after{ margin-left: 0; }
+  .about-text p{ color: #4a4239; }
+  .about-signature{
+    margin-top: 24px;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* ==========================================================
+     5. サービス セクション
+     ========================================================== */
+  .services{
+    background: var(--color-wood-dark);
+    color: var(--color-white);
+  }
+  .services .section-title,
+  .services .section-intro{ color: var(--color-white); }
+  .services .section-intro{ color: #cfc4b4; }
+  .service-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 28px;
+  }
+  .service-card{
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,162,39,0.35);
+    padding: 40px 26px;
+    text-align: center;
+    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+  }
+  .service-card:hover{
+    transform: translateY(-8px);
+    border-color: var(--color-gold);
+    background: rgba(255,255,255,0.07);
+  }
+  .service-icon{
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+  }
+  .service-card h3{
+    color: var(--color-white);
+    font-size: 1.2rem;
+  }
+  .service-card p{
+    color: #cfc4b4;
+    font-size: 0.92rem;
+  }
+
+  /* ==========================================================
+     6. ギャラリー セクション
+     ========================================================== */
+  .gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .gallery-item{
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+  }
+  .gallery-item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img{ transform: scale(1.08); }
+  .gallery-item .caption{
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 14px 16px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75), transparent);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .gallery-item:hover .caption{ opacity: 1; transform: translateY(0); }
+
+  /* ライトボックス(画像拡大表示) */
+  .lightbox{
+    position: fixed;
+    inset: 0;
+    background: rgba(10,8,7,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 24px;
+  }
+  .lightbox.active{ opacity: 1; pointer-events: auto; }
+  .lightbox img{
+    max-width: 90vw;
+    max-height: 80vh;
+    border: 1px solid var(--color-gold);
+  }
+  .lightbox-close{
+    position: absolute;
+    top: 24px; right: 32px;
+    color: var(--color-white);
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* ==========================================================
+     7. お客様の声(Testimonials)
+     ========================================================== */
+  .testimonials{
+    background: var(--color-white);
+  }
+  .testimonial-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+  .testimonial-card{
+    background: #fff;
+    border: 1px solid #e6dcc9;
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .testimonial-quote{
+    font-style: italic;
+    color: #4a4239;
+    margin-bottom: 20px;
+  }
+  .testimonial-quote::before{ content: "\201C"; color: var(--color-accent); font-size: 1.4rem; }
+  .testimonial-quote::after{ content: "\201D"; color: var(--color-accent); font-size: 1.4rem; }
+  .testimonial-name{
+    font-family: var(--font-heading);
+    color: var(--color-ink);
+    letter-spacing: 0.08em;
+  }
+  .testimonial-stars{ color: var(--color-gold); margin-bottom: 14px; }
+
+  /* ==========================================================
+     8. お問い合わせ / 予約セクション
+     ========================================================== */
+  .contact{
+    background: var(--color-ink);
+    color: var(--color-white);
+    text-align: center;
+  }
+  .contact .section-title, .contact .section-intro{ color: var(--color-white); }
+  .contact .section-intro{ color: #cfc4b4; }
+  .contact-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .contact-buttons a.btn{ min-width: 200px; }
+
+  /* ==========================================================
+     9. フッター
+     ========================================================== */
+  .site-footer{
+    background: var(--color-black);
+    color: #9c9186;
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .site-footer .logo{ display: block; margin-bottom: 10px; }
+
+  /* ==========================================================
+     10. スクロール表示アニメーション用クラス
+     JSでIntersectionObserverを使い、画面に入ったら
+     .reveal に .is-visible を付与してフェードインさせます。
+     ========================================================== */
+  .reveal{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ==========================================================
+     11. レスポンシブ対応(スマホ・タブレット)
+     ========================================================== */
+  @media (max-width: 860px){
+    .about .container{
+      grid-template-columns: 1fr;
+    }
+    .gallery-grid{
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 720px){
+    .nav-links{
+      position: fixed;
+      top: 0; right: 0;
+      height: 100vh;
+      width: 70%;
+      max-width: 300px;
+      background: rgba(18,18,18,0.98);
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 28px;
+      padding: 40px 32px;
+      transform: translateX(100%);
+      transition: transform 0.4s ease;
+    }
+    .nav-links.open{ transform: translateX(0); }
+    .menu-toggle{ display: flex; }
+    section{ padding: 72px 20px; }
+  }
+
+  @media (max-width: 480px){
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
+    .contact-buttons a.btn{ width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     ヘッダー / ナビゲーション
+     スクロールすると背景が付く仕組みはJS側で制御しています。
+     ========================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="logo">JIN<span>.</span></div>
+  <nav class="nav-links" id="navLinks">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#testimonials" class="nav-link">Testimonials</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ==========================================================
+     1. ヒーローセクション
+     シェフ名・キャッチコピー・予約ボタンを配置
+     ========================================================== -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <span class="hero-kicker">Private Sushi Chef &middot; Sydney</span>
+    <h1 class="hero-title">JIN <span class="accent">仁</span></h1>
+    <p class="hero-subtitle">
+      An intimate omakase experience, crafted by hand and served at your table &mdash;
+      bringing the art of Edomae sushi to birthdays, celebrations and private dining across Sydney.
+    </p>
+    <a href="#contact" class="btn">Reserve Your Experience</a>
+  </div>
+</section>
+
+<!-- ==========================================================
+     2. About セクション
+     シェフの紹介文(仮テキスト、後で差し替えてOK)
+     ========================================================== -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-image reveal">
+      <img src="images/about-jin.svg" alt="Portrait of Chef Jin">
+    </div>
+    <div class="about-text reveal">
+      <span class="section-label">About the Chef</span>
+      <h2>A Lifetime Devoted to Sushi</h2>
+      <p>
+        Trained in Tokyo's traditional Edomae style and refined over more than a decade
+        behind the sushi counter, Jin brings a quiet precision to every piece he prepares.
+        Now based in Sydney, he travels to bring the omakase counter experience directly
+        into your home &mdash; sourcing the freshest seasonal fish and pairing technique
+        with genuine hospitality.
+      </p>
+      <p>
+        Every course is prepared in front of you, course by course, so that each guest can
+        witness the craft as closely as they taste it. It is not simply a meal &mdash;
+        it is a shared moment, made memorable through simplicity and care.
+      </p>
+      <span class="about-signature">Jin &mdash; Sushi Chef</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     3. サービス セクション
+     対応可能なイベントの種類を紹介
+     ========================================================== -->
+<section class="services" id="services">
+  <div class="container">
+    <span class="section-label">What I Offer</span>
+    <h2 class="section-title">Private Dining Services</h2>
+    <p class="section-intro">
+      From intimate birthday dinners to milestone celebrations, every menu is tailored
+      to the occasion and prepared fresh, right at your table.
+    </p>
+    <div class="service-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#127874;</div>
+        <h3>Birthday Celebrations</h3>
+        <p>A personalised omakase menu to make any birthday an unforgettable evening.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#127881;</div>
+        <h3>Private Parties</h3>
+        <p>Live sushi counter experiences for gatherings of family, friends and colleagues.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#128149;</div>
+        <h3>Anniversaries</h3>
+        <p>An elegant, romantic dining experience crafted for special milestones.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#127843;</div>
+        <h3>Bespoke Dining</h3>
+        <p>Custom omakase courses designed around your taste, guests and setting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     4. ギャラリー セクション
+     images/ フォルダの画像を使用(現在はプレースホルダー画像)
+     クリックすると拡大表示(ライトボックス)されます。
+     ========================================================== -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <span class="section-label">Gallery</span>
+    <h2 class="section-title">A Taste of the Experience</h2>
+    <p class="section-intro">A glimpse into recent omakase courses and private dining setups around Sydney.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal" data-caption="Omakase Nigiri">
+        <img src="images/gallery-1.svg" alt="Omakase nigiri selection">
+        <div class="caption">Omakase Nigiri</div>
+      </div>
+      <div class="gallery-item reveal" data-caption="Fresh Sashimi">
+        <img src="images/gallery-2.svg" alt="Fresh sashimi plate">
+        <div class="caption">Fresh Sashimi</div>
+      </div>
+      <div class="gallery-item reveal" data-caption="Chef at Work">
+        <img src="images/gallery-3.svg" alt="Chef Jin preparing sushi">
+        <div class="caption">Chef at Work</div>
+      </div>
+      <div class="gallery-item reveal" data-caption="Table Setting">
+        <img src="images/gallery-4.svg" alt="Private dining table setting">
+        <div class="caption">Table Setting</div>
+      </div>
+      <div class="gallery-item reveal" data-caption="Seasonal Course">
+        <img src="images/gallery-5.svg" alt="Seasonal omakase course">
+        <div class="caption">Seasonal Course</div>
+      </div>
+      <div class="gallery-item reveal" data-caption="Sydney Harbour Dining">
+        <img src="images/gallery-6.svg" alt="Private dining with Sydney harbour view">
+        <div class="caption">Sydney Harbour Dining</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ライトボックス本体(1つだけ用意して画像を差し替えて使う) -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <img src="" alt="" id="lightboxImage">
+</div>
+
+<!-- ==========================================================
+     5. お客様の声(任意セクション、仮テキスト)
+     ========================================================== -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <span class="section-label">Testimonials</span>
+    <h2 class="section-title">What Guests Are Saying</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">Jin turned my husband's birthday into the best meal we've ever had at home. Every piece was flawless.</p>
+        <div class="testimonial-name">Emily R.</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">An incredible private dining experience. Professional, warm, and the sushi was restaurant quality &mdash; better, actually.</p>
+        <div class="testimonial-name">Marcus T.</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-quote">We booked Jin for our anniversary and it exceeded every expectation. Highly recommend for any special occasion.</p>
+        <div class="testimonial-name">Sarah &amp; David</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     6. お問い合わせ / 予約セクション
+     Instagram・電話・メールへのリンクボタン
+     ========================================================== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <span class="section-label">Booking &amp; Enquiries</span>
+    <h2 class="section-title">Reserve Your Omakase Evening</h2>
+    <p class="section-intro">
+      Available for private events across Sydney. Get in touch to check availability
+      and discuss your menu.
+    </p>
+    <div class="contact-buttons">
+      <!-- Instagramのリンク(実際のアカウントURLに差し替えてください) -->
+      <a href="https://instagram.com/jin.sushi.sydney" target="_blank" rel="noopener" class="btn">Instagram</a>
+      <!-- 電話番号リンク(実際の番号に差し替えてください) -->
+      <a href="tel:+61400000000" class="btn">Call: +61 400 000 000</a>
+      <!-- メールリンク(実際のメールアドレスに差し替えてください) -->
+      <a href="mailto:booking@jinsushi.com.au" class="btn">Email Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     フッター
+     ========================================================== -->
+<footer class="site-footer">
+  <div class="logo">JIN &mdash; Private Sushi Chef, Sydney</div>
+  <p>&copy; <span id="year"></span> Jin Sushi. All rights reserved.</p>
+</footer>
+
+<script>
+  /* ==========================================================
+     JavaScript
+     やっていることは主に4つです:
+     1. スクロールでヘッダーの背景を変える
+     2. スマホ用ハンバーガーメニューの開閉
+     3. スクロールで各セクションをふわっと表示する(reveal)
+     4. ギャラリー画像をクリックすると拡大表示する(ライトボックス)
+     ========================================================== */
+
+  // フッターの年号を自動で今年にする
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // 1. ヘッダーのスクロール制御
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // 2. ハンバーガーメニューの開閉
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // メニュー内のリンクをクリックしたら自動で閉じる(スマホ用)
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // 3. スクロールで要素をふわっと表示する(IntersectionObserver)
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // 一度表示したら監視をやめる
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealElements.forEach(el => observer.observe(el));
+
+  // 4. ギャラリーのライトボックス(画像クリックで拡大)
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      lightboxImage.src = img.src;
+      lightboxImage.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightboxImage.src = '';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    // 画像自体ではなく、背景をクリックしたときだけ閉じる
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>

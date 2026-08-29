@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#efe8dc"/>
+      <stop offset="100%" stop-color="#d9cdb8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect x="40" y="40" width="720" height="920" fill="none" stroke="#c1272d" stroke-width="3" opacity="0.5"/>
+  <circle cx="400" cy="420" r="150" fill="#2c2019" opacity="0.85"/>
+  <text x="400" y="440" font-family="Georgia, serif" font-size="64" fill="#efe8dc" text-anchor="middle">仁</text>
+  <text x="400" y="640" font-family="Georgia, serif" font-size="26" fill="#5a4a3a" text-anchor="middle" letter-spacing="4">CHEF PHOTO PLACEHOLDER</text>
+</svg>
